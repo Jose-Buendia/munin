@@ -1,0 +1,6 @@
+---
+  - name: Instalación y configuración de un stack para monitoreo con munin.
+    hosts: webnode
+    remote_user: root
+    roles:
+     - munin-node

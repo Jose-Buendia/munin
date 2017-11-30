@@ -1,0 +1,24 @@
+Alias /munin {{ munin_htmldir }}
+<Directory {{ munin_htmldir }}>
+ # Require local
+ Order allow,deny
+ Require all granted
+ Options FollowSymLinks SymLinksIfOwnerMatch
+Allow from all
+ Options None
+</Directory>
+
+ScriptAlias /munin-cgi/munin-cgi-graph /usr/lib/munin/cgi/munin-cgi-graph
+<Location /munin-cgi/munin-cgi-graph>
+ # Require local
+ Allow from all
+ Require all granted
+ Options FollowSymLinks SymLinksIfOwnerMatch
+ <IfModule mod_fcgid.c>
+ SetHandler fcgid-script
+ </IfModule>
+ <IfModule !mod_fcgid.c>
+ SetHandler cgi-script
+ </IfModule>
+</Location>
+

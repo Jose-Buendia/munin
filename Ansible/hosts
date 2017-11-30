@@ -1,0 +1,8 @@
+[webnode]
+munin_node_web_server ansible_port=2221 ansible_ssh_private_key_file=../Dockerfile/key.private
+
+[webmaster]
+munin_master_web_server ansible_port=2222 ansible_ssh_private_key_file=../Dockerfile/key.private
+
+
+

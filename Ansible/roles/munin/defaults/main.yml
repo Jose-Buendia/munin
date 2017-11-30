@@ -1,0 +1,57 @@
+---
+
+munin_packages:
+  - munin
+  - mailutils
+  - apache2-utils
+
+munin_dbdir: /var/lib/munin
+munin_htmldir: /var/www/munin
+munin_logdir: /var/log/munin
+munin_rundir: /var/run/munin
+munin_tmpldir: /etc/munin/templates
+munin_confdir: /etc/munin/munin-conf.d
+munin_dir: /etc/munin
+
+graph_strategy: "cgi"
+cgiurl_graph: "/munin-cgi/munin-cgi-graph"
+
+
+munin_max_processes: 12
+
+# Will be translated into:
+# [host]
+#   address: [name]
+#   [extra.0]
+#   [extra.1]
+#   [...]
+#
+# Note that `name` can be hostname, or group + hostname, for example:
+# [example.com;foo.example.com]
+munin_hosts:
+  - {
+    name: "localhost",
+    address: "127.0.0.1",
+    extra: ["use_node_name yes"]
+  }
+
+munin_contacts: []
+#  - {
+#    name: "JohnDoe",
+#    email: "johndoe@example.com",
+#    subject: "Munin-notification for ${var:group} :: ${var:host}",
+#    level: "warning critical"
+#   }
+
+
+# list of contacts name sperated by space which receive all alerts
+munin_default_contacts: "no"
+
+# enable pagerduty integration
+munin_pagerduty_integration: False
+
+munin_pagerduty_client_url: "https://github.com/samuel/python-pagerduty/archive/v0.2.1.tar.gz"
+
+munin_pagerduty_integration_script_url: "https://gist.githubusercontent.com/samuel/720925/raw/fa3bdc0322ade23530c32b3c7e795d64cd2cc7d2/pagerduty_munin.py"
+
+munin_pagerduty_install_dir: "/usr/local/bin/munin-pagerduty"

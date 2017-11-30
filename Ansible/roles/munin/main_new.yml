@@ -1,0 +1,48 @@
+---
+
+- name: Install required packages for munin
+  apt: "name={{ item }} state=present update_cache=yes"
+  with_items: "{{ munin_packages }}"
+
+- name: aaaa
+  command: apt-get install -y libcgi-fast-perl libapache2-mod-fcgid
+
+- name: Copy munin configurations.
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - src: munin.conf.j2
+      dest: "{{ munin_dir }}/munin.conf"
+    - src: hosts.conf.j2
+      dest: "{{ munin_confdir }}/hosts.conf"
+    - src: apache.conf.j2
+      dest: "{{ munin_dir }}/apache.conf"
+
+- name: Create munin www directory
+  file: path="{{ munin_htmldir }}" owner="munin" group="munin" state=directory
+
+
+- name: ddd
+  command: chmod 755 /var/www/munin
+
+- name: dddd
+  command: chown munin:munin /var/www/munin
+
+- name: permisos munin www directory
+  file:
+    path: "{{ munin_htmldir }}"
+    state: touch
+    mode: "u=rw,g=r,o=r"
+
+- include: pagerduty_integration.yml
+  when: munin_pagerduty_integration
+
+- name: restart munin-node
+  service: name=munin-node state=restarted
+
+- name: restart apache
+  service: name=apache2 state=restarted

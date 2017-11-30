@@ -1,0 +1,6 @@
+---
+  - name: Instalación y configuración de un stack para monitoreo con munin.
+    hosts: webmaster
+    remote_user: root
+    roles:
+     - munin
